@@ -28,6 +28,7 @@ namespace Connect_Me_FCT
         public static string portCom;
         public static string baudeRate;
         private string flexFlow;
+        private string[] portComs;
 
         DialogResult res;
 
@@ -67,6 +68,12 @@ namespace Connect_Me_FCT
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            if (!File.Exists("..\\Settings.xml"))
+            {
+                portComs = Utilities.ListaportCOM();
+                Utilities.CreaXML("ON", portComs[0], "9600", "..\\Log_File\\Pass", "..\\Log_File\\Fail", "default");
+                Utilities.loadDocument("encripta");
+            }
             cargaConfiguracion();
             res = MessageBox.Show("El puerto serial configurado actualmente es: " + portCom + " y el baude rate configurado es: " + baudeRate + " ¿Desea realizar modificaciones?", "Configuracion inicial", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes)
